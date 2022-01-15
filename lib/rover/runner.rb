@@ -15,8 +15,24 @@ module Rover
     end
 
     def run
-      wait_for_placement_input
-      wait_for_all_inputs
+      wait_for_placement_input until placed?
+
+      while true do
+        instruction, arguments = wait_for_command
+
+        case instruction
+        when 'PLACE'
+          place(arguments)
+        when 'MOVE'
+          move
+        when 'LEFT'
+          left
+        when 'RIGHT'
+          right
+        when 'REPORT'
+          report
+        end
+      end
     end
 
     private
@@ -51,41 +67,25 @@ module Rover
       rover.move!
     end
 
-    def wait_for_placement_input
-      until placed?
-        command = gets.chomp
-        command_elements = command.split(' ')
-        instruction = command_elements.first
+    def wait_for_command
+      input = gets.chomp
 
-        next unless instruction == 'PLACE'
+      elements = input.split(' ')
 
-        arguments = command_elements[1].split(',')
+      instruction = elements.first
 
-        place(arguments)
-      end
+      # Casting the possibly non-existent arguments to a String allows us to handle the PLACE params
+      arguments = String(elements[1]).split(',')
+
+      [ instruction, arguments ]
     end
 
-    def wait_for_all_inputs
-      while true do
-        command = gets.chomp
-        command_elements = command.split(' ')
-        instruction = command_elements.first
+    def wait_for_placement_input
+      instruction, arguments = wait_for_command
 
-        case instruction
-        when 'PLACE'
-          arguments = command_elements[1].split(',')
+      return unless instruction == 'PLACE'
 
-          place(arguments)
-        when 'MOVE'
-          move
-        when 'LEFT'
-          left
-        when 'RIGHT'
-          right
-        when 'REPORT'
-          report
-        end
-      end
+      place(arguments)
     end
   end
 end
