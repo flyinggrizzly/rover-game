@@ -35,6 +35,14 @@ module Rover
       self
     end
 
+    def left!
+      turn!(LEFT)
+    end
+
+    def right!
+      turn!(RIGHT)
+    end
+
     def turn!(turn_direction)
       ensure_placed!
 
