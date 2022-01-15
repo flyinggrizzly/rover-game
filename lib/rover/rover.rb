@@ -1,6 +1,6 @@
 module Rover
   class Rover
-    attr_accessor :x, :y, :facing
+    attr_reader :x, :y, :facing
 
     NORTH = 'NORTH'.freeze
     EAST = 'EAST'.freeze
@@ -40,7 +40,7 @@ module Rover
 
     private
 
-    attr_accessor :board
+    attr_reader :board
 
     def address_for_move
       case facing
