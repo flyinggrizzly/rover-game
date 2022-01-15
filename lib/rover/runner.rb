@@ -35,7 +35,25 @@ module Rover
       end
     end
 
+    def wait_for_command
+      input = gets_user_input.chomp
+
+      elements = input.split(' ')
+
+      instruction = elements.first
+
+      # Casting the possibly non-existent arguments to a String allows us to handle the PLACE params
+      arguments = String(elements[1]).split(',')
+
+      [ instruction, arguments ]
+    end
+
     private
+
+    # Seam for testing without stubbing $stdin
+    def gets_user_input
+      gets
+    end
 
     def placed?
       rover.placed?
@@ -65,19 +83,6 @@ module Rover
 
     def move
       rover.move!
-    end
-
-    def wait_for_command
-      input = gets.chomp
-
-      elements = input.split(' ')
-
-      instruction = elements.first
-
-      # Casting the possibly non-existent arguments to a String allows us to handle the PLACE params
-      arguments = String(elements[1]).split(',')
-
-      [ instruction, arguments ]
     end
 
     def wait_for_placement_input
