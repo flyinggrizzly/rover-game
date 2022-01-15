@@ -11,6 +11,12 @@ RSpec.describe Rover::Rover do
   subject { rover.place(x, y, facing) }
 
   describe '#turn!' do
+    it 'cannot be called before #place' do
+      expect{
+        rover.turn!(described_class::LEFT)
+      }.to raise_error(described_class::UnplacedRoverError)
+    end
+
     it 'updates the facing' do
       cases = [
         # Looping around the back of the directions array
@@ -39,6 +45,12 @@ RSpec.describe Rover::Rover do
   end
 
   describe '#move!' do
+    it 'cannot be called before #place' do
+      expect{
+        rover.move!
+      }.to raise_error(described_class::UnplacedRoverError)
+    end
+
     describe 'for a legal move (that remains on the board)' do
       it 'returns a new rover with an updated address' do
         moved = subject.move!

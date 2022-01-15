@@ -1,5 +1,7 @@
 module Rover
   class Rover
+    class UnplacedRoverError < StandardError; end
+
     attr_reader :x, :y, :facing
 
     NORTH = 'NORTH'.freeze
@@ -19,6 +21,8 @@ module Rover
     end
 
     def move!
+      ensure_placed!
+
       return self unless board.in_bounds?(address_for_move)
 
       @x = address_for_move[0]
@@ -28,6 +32,8 @@ module Rover
     end
 
     def turn!(turn_direction)
+      ensure_placed!
+
       current_facing_index = FACINGS.index(facing)
 
       index_increment = if turn_direction == LEFT
@@ -73,6 +79,10 @@ module Rover
       else
         raise "Cannot create new address for unknown facing #{facing}"
       end
+    end
+
+    def ensure_placed!
+      raise UnplacedRoverError, 'hi' if [x, y, facing].any?(&:nil?)
     end
   end
 end
