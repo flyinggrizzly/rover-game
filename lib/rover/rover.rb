@@ -20,6 +20,10 @@ module Rover
       @facing = nil
     end
 
+    def report
+      [x, y, facing]
+    end
+
     def move!
       ensure_placed!
 

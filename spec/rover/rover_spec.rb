@@ -10,6 +10,12 @@ RSpec.describe Rover::Rover do
 
   subject { rover.place(x, y, facing) }
 
+  describe '#report' do
+    it do
+      expect(subject.report).to eq([x, y, facing])
+    end
+  end
+
   describe '#turn!' do
     it 'cannot be called before #place' do
       expect{
