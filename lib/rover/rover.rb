@@ -74,6 +74,10 @@ module Rover
       self
     end
 
+    def placed?
+      ![x, y, facing].any?(&:nil?)
+    end
+
     private
 
     attr_reader :board
@@ -94,7 +98,7 @@ module Rover
     end
 
     def ensure_placed!
-      raise UnplacedRoverError, 'hi' if [x, y, facing].any?(&:nil?)
+      raise UnplacedRoverError, 'Must place rover before operation' unless placed?
     end
   end
 end

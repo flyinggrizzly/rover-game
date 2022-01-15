@@ -35,6 +35,10 @@ module Rover
       @rover = Rover.new(board)
     end
 
+    def placed?
+      rover.placed?
+    end
+
     def place(arguments)
       x_address = arguments.first.to_i
       y_address = arguments[1].to_i
