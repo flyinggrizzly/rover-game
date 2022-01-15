@@ -27,6 +27,24 @@ module Rover
       self
     end
 
+    def turn!(turn_direction)
+      current_facing_index = FACINGS.index(facing)
+
+      index_increment = if turn_direction == LEFT
+                          -1
+                        elsif turn_direction == RIGHT
+                          1
+                        else
+                          raise "Cannot turn in unknown direction #{turn_direction}"
+                        end
+
+      new_facing_index = (current_facing_index + index_increment) % FACINGS.size
+
+      @facing = FACINGS[new_facing_index]
+
+      self
+    end
+
     def place(new_x, new_y, new_facing)
       raise "Invalid address [#{new_x}, #{new_y}]" unless board.in_bounds?([new_x, new_y])
       raise "Invalid facing #{new_facing}" unless FACINGS.include?(new_facing)
