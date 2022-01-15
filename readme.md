@@ -2,7 +2,7 @@
 
 ## Plan
 
-- [ ] identify core concepts
+- [x] identify core concepts
 - [ ] begin by speccing core concepts, then implementing
   - board
   - rover and movement
