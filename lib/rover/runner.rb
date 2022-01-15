@@ -8,6 +8,18 @@ module Rover
     def self.run
       runner = new
 
+      until runner.placed?
+        command = gets.chomp
+        command_elements = command.split(' ')
+        instruction = command_elements.first
+
+        next unless instruction == 'PLACE'
+
+        arguments = command_elements[1].split(',')
+
+        runner.place(arguments)
+      end
+
       while true do
         command = gets.chomp
         command_elements = command.split(' ')
